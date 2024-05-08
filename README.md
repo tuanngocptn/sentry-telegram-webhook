@@ -31,7 +31,7 @@
 
 - After you create the new integration then you need config some part like below image
 
-**Note:** `<your-server-here.domain>` is your webhooks server. If you are running locally. You can use ngrok for generate this.
+**Note:** `<your-server-here.domain>` is your webhooks server. If you are running locally. You can use [Ngrok](https://ngrok.com/) for generate this.
 
 ![sentry internal integration config detail](https://github.com/tuanngocptn/sentry-telegram-webhook/blob/main/.github/assets/imgs/sentry_internal_integration_config_detail.png?raw=true "sentry internal integration config detail")
 
