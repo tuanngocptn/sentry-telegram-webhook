@@ -1,72 +1,134 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Sentry Telegram Webhook
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+**Description:** Webhook for Sentry which allows sending notification via Telegram messenger.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- The result will look like this:
 
-## Description
+![Sentry Telegram Webhook Result](https://github.com/tuanngocptn/sentry-telegram-webhook/blob/main/.github/assets/imgs/telegram_send_result.png?raw=true "Sentry Telegram Webhook Result")
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Requirements
+
+- Nodejs 18+ (recommend: 20+)
 
 ## Installation
 
-```bash
-$ npm install
+  ```bash
+  $ npm install
+  ```
+
+## Environment variables
+
+| Name                     | Is Require | Type   | Note                                                                                                                                                                                                                                          | Value |
+|--------------------------|------------|--------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------|
+| LANGUAGE                 | Yes        | string | The language of message when send                                                                                                                                                                                                             | vi,en |
+| TELEGRAM_BOT_TOKEN       | Yes        | string | The token from @BotFather telegram check [HERE](https://core.telegram.org/bots/tutorial#obtain-your-bot-token) for see how to get this.                                                                                                       |       |
+| TELEGRAM_GROUP_ID        | Yes        | number | The id of your telegram group. You can use telegram API for check that through Postman. Check [HERE](https://stackoverflow.com/questions/32423837/telegram-bot-how-to-get-a-group-chat-id) for more detail. Normally, that start with -100... |       |
+| TELEGRAM_TOPIC_ID        | No         | number | The id of you topic if you enable Topics in group setting.                                                                                                                                                                                    |       |
+| SENTRY_INTEGRATION_TOKEN | Yes        | string | The token that geneate by sentry. Check [HERE](https://docs.sentry.io/organization/integrations/integration-platform/#permissions) for more detail.                                                                                           |       |
+| SENTRY_ORGANIZATION_SLUG | Yes        | string | The organization slug in your sentry organization setting                                                                                                                                                                                     |       |
+
+## Custom Integrations Configuration
+
+- After you create the new integration then you need config some part like below image
+
+**Note:** `<your-server-here.domain>` is your webhooks server. If you are running locally. You can use ngrok for generate this.
+
+![sentry internal integration config detail](https://github.com/tuanngocptn/sentry-telegram-webhook/blob/main/.github/assets/imgs/sentry_internal_integration_config_detail.png?raw=true "sentry internal integration config detail")
+
+- And permission, that allow you trigger to you webhook.
+
+![sentry internal integration config permission](https://github.com/tuanngocptn/sentry-telegram-webhook/blob/main/.github/assets/imgs/sentry_internal_integration_config_permission.png?raw=true "sentry internal integration config permission")
+
+
+## Running the app (normal)
+
+1. Clone `.env.template` file
+
+  ```sh
+  cp .env.template .env
+  ```
+
+2. Edit `.env` file with your value.
+
+  ```env
+  LANGUAGE=en
+  TELEGRAM_BOT_TOKEN=<get from bot father>
+  TELEGRAM_GROUP_ID=<your telegram group id or telegram channel id>
+  TELEGRAM_TOPIC_ID=<not require - your telegram topic (when enable Topics in group setting)>
+  SENTRY_INTEGRATION_TOKEN=<token in Custom Integrations in Sentry Setting>
+  SENTRY_ORGANIZATION_SLUG=<your Sentry org slug>
+  ```
+
+3. Run with npm
+
+
+  ```bash
+  # development
+  $ npm run start
+
+  # watch mode
+  $ npm run start:dev
+
+  # production mode
+  $ npm run start:prod
+  ```
+
+## Running the app with docker (Recommended)
+
+**Note:** You don't need run `npm install` and setup nodejs.
+
+1. for running locally (debug):
+
+- Clone `docker-compose-template.yml`
+
+  ```sh
+  cp docker-compose-template.yml docker-compose.yml
+  ```
+
+- Edit environment variables:
+
+  ```yml
+  environment:
+    - LANGUAGE=en
+    - TELEGRAM_BOT_TOKEN=<get from bot father>
+    - TELEGRAM_GROUP_ID=<your telegram group id or telegram channel id>
+    - TELEGRAM_TOPIC_ID=<not require - your telegram topic (when enable Topics in group setting)>
+    - SENTRY_INTEGRATION_TOKEN=<token in Custom Integrations in Sentry Setting>
+    - SENTRY_ORGANIZATION_SLUG=<your Sentry org slug>
+  ```
+
+- Run with docker:
+
+```sh
+docker compose up
 ```
 
-## Running the app
+2. for running production (release):
 
-```bash
-# development
-$ npm run start
+- Clone `docker-compose-prod-template.yml`
 
-# watch mode
-$ npm run start:dev
+  ```sh
+  cp docker-compose-prod-template.yml docker-compose.yml
+  ```
 
-# production mode
-$ npm run start:prod
-```
+- Edit environment variables:
 
-## Test
+  ```yml
+  environment:
+    - LANGUAGE=en
+    - TELEGRAM_BOT_TOKEN=<get from bot father>
+    - TELEGRAM_GROUP_ID=<your telegram group id or telegram channel id>
+    - TELEGRAM_TOPIC_ID=<not require - your telegram topic (when enable Topics in group setting)>
+    - SENTRY_INTEGRATION_TOKEN=<token in Custom Integrations in Sentry Setting>
+    - SENTRY_ORGANIZATION_SLUG=<your Sentry org slug>
+  ```
 
-```bash
-# unit tests
-$ npm run test
 
-# e2e tests
-$ npm run test:e2e
+- Run with docker:
 
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+  ```sh
+  docker compose up
+  ```
 
 ## License
 
