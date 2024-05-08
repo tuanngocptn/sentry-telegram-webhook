@@ -7,10 +7,10 @@ import {
   Post,
   UseInterceptors,
 } from '@nestjs/common';
-import { AppService } from './app.service';
-import { AppInterceptor } from './app.interceptor';
 import { HookMessageDataType, SentryRequestType } from './app';
 import { AppHelper } from './app.helper';
+import { AppInterceptor } from './app.interceptor';
+import { AppService } from './app.service';
 
 @Controller()
 @UseInterceptors(AppInterceptor)
