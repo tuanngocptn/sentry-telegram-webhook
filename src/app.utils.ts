@@ -4,11 +4,13 @@ export function generateHookMessageEn(data: HookMessageDataType) {
   const _data: HookMessageDataType = escapedHookMessageData(data);
   return `
 *💣 Issue ${_data.issueAction}:* 
+
 \\- *App name:* ${_data.appName}  
 \\- *Title:* ${_data.title}  
 \\- *Position:* ${_data.errorPosition}  
 \\- *Environment:* ${_data.environment}  
 \\- *Operation system:* ${_data.operationSystem} 
+
 *Detail:* [HERE](${_data.detailLink}) 
   `;
 }
