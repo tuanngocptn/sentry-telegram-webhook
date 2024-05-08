@@ -9,8 +9,6 @@ services:
       - SENTRY_ORGANIZATION_SLUG=<your Sentry org slug>
     build:
       context: .
+    restart: always
     ports:
       - 3000:3000
-    volumes:
-      - ./:/code
-    command: npm run start:dev

@@ -1,12 +1,12 @@
 FROM node:18.19-alpine
 
-WORKDIR /code
+WORKDIR /
 
-COPY package.json package.json
-COPY package-lock.json package-lock.json
+COPY . /
 
 RUN npm install
+RUN npm i -g @nestjs/cli
+RUN npm run build
 
-COPY . .
-
-CMD ["npm", "start"]
+EXPOSE 3000
+CMD ["npm", "run", "start:prod"]
