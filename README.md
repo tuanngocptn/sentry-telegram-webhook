@@ -88,7 +88,10 @@ $ npm install
   ```yml
   services:
     app:
+      # Docker hub package
       image: tuanngocptn/sentry-telegram-webhook:latest
+      # Github hub package
+      # image: ghcr.io/tuanngocptn/sentry-telegram-webhook:1.0.0
       environment:
         - LANGUAGE=en
         - TELEGRAM_BOT_TOKEN=<get from bot father>
