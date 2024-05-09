@@ -2,6 +2,10 @@
 
 **Description:** Webhook for Sentry which allows sending notification via Telegram messenger.
 
+- Github Repository: [HERE](https://github.com/tuanngocptn/sentry-telegram-webhook).
+
+- Docker Hub: [HERE](https://hub.docker.com/repository/docker/tuanngocptn/sentry-telegram-webhook).
+
 - The result will look like this:
 
 ![Sentry Telegram Webhook Result](https://github.com/tuanngocptn/sentry-telegram-webhook/blob/main/.github/assets/imgs/telegram_send_result.png?raw=true 'Sentry Telegram Webhook Result')
