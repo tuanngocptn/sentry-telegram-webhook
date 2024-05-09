@@ -1,0 +1,17 @@
+name: Docker Image CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+      - run: echo ${{ steps.package-version.outputs.current-version}}
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag tuanngocptn/sentry-telegram-webhook:${{ steps.package-version.outputs.current-version}}
