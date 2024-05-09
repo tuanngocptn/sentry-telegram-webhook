@@ -31,7 +31,7 @@ $ npm install
 
 - After you create the new integration then you need config some part like below image
 
-**Note:** `<your-server-here.domain>` is your webhooks server. If you are running locally. You can use [Ngrok](https://ngrok.com/) for generate this.
+**Note:** _`<your-server-here.domain>` is your webhooks server. If you are running locally. You can use [Ngrok](https://ngrok.com/) for generate this._
 
 ![sentry internal integration config detail](https://github.com/tuanngocptn/sentry-telegram-webhook/blob/main/.github/assets/imgs/sentry_internal_integration_config_detail.png?raw=true 'sentry internal integration config detail')
 
@@ -73,9 +73,30 @@ $ npm install
 
 ## Running the app with docker (Recommended)
 
-**Note:** You don't need run `npm install` and setup nodejs.
+**Note:** _You don't need run `npm install` and setup nodejs._
 
-1. for running locally (debug):
+1. Run direct from docker hub: (don't need clone the repository)
+
+- create the compose file with below information. More details [HERE](https://hub.docker.com/repository/docker/tuanngocptn/sentry-telegram-webhook).
+
+  ```yml
+  services:
+    app:
+      image: tuanngocptn/sentry-telegram-webhook:latest
+      environment:
+        - LANGUAGE=en
+        - TELEGRAM_BOT_TOKEN=<get from bot father>
+        - TELEGRAM_GROUP_ID=<your telegram group id or telegram channel id>
+        - TELEGRAM_TOPIC_ID=<not require - your telegram topic (when enable Topics in group setting)>
+        - SENTRY_INTEGRATION_TOKEN=<token in Custom Integrations in Sentry Setting>
+        - SENTRY_ORGANIZATION_SLUG=<your Sentry org slug>
+      ports:
+        - 3000:3000
+      volumes:
+        - ./logs:/code/logs
+  ```
+
+2. For running locally (debug):
 
 - Clone `docker-compose-template.yml`
 
@@ -101,7 +122,7 @@ $ npm install
   docker compose up
   ```
 
-2. for running production (release):
+3. For running production (release):
 
 - Clone `docker-compose-prod-template.yml`
 
