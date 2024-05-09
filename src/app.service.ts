@@ -24,7 +24,7 @@ export class AppService {
         : undefined,
     };
 
-    this.bot.sendMessage(
+    await this.bot.sendMessage(
       process.env.TELEGRAM_GROUP_ID,
       message,
       sendMessageOptions,

@@ -1,8 +1,8 @@
 FROM node:18.19-alpine
 
-WORKDIR /
+WORKDIR /code
 
-COPY . /
+COPY . /code
 
 RUN npm install
 RUN npm i -g @nestjs/cli

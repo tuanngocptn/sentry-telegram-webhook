@@ -4,11 +4,12 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Inject,
   Post,
   UseInterceptors,
 } from '@nestjs/common';
+import { Logger } from 'winston';
 import { HookMessageDataType, SentryRequestType } from './app';
-import { AppHelper } from './app.helper';
 import { AppInterceptor } from './app.interceptor';
 import { AppService } from './app.service';
 
@@ -16,8 +17,9 @@ import { AppService } from './app.service';
 @UseInterceptors(AppInterceptor)
 export class AppController {
   constructor(
+    @Inject('winston')
+    private readonly logger: Logger,
     private readonly appService: AppService,
-    private readonly appHelper: AppHelper,
   ) {}
 
   @Get()
@@ -28,6 +30,7 @@ export class AppController {
   @Post('/sentry/webhooks')
   @HttpCode(HttpStatus.OK)
   async webhooks(@Body() reqBody: SentryRequestType) {
+    this.logger.info('reqBody', reqBody);
     const { issue } = reqBody.data;
     const environment = await this.appService.checkSentryDetailTagIssue(
       'environment',
@@ -47,7 +50,6 @@ export class AppController {
       detailLink: `https://${process.env.SENTRY_ORGANIZATION_SLUG}.sentry.io/issues/${issue.id}`,
     };
     this.appService.sentTelegramMessage(hookMessageData);
-
     return reqBody.installation;
   }
 }
