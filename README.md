@@ -33,7 +33,9 @@ $ npm install
 
 ## Custom Integrations Configuration
 
-- After you create the new integration then you need config some part like below image
+- Create the new integrations check [HERE](https://docs.sentry.io/organization/integrations/integration-platform/#permissions) for more detail.
+
+- After you create the new integration then you need config some parts like below image
 
 **Note:** _`<your-server-here.domain>` is your webhooks server. If you are running locally. You can use [Ngrok](https://ngrok.com/) for generate this._
 
