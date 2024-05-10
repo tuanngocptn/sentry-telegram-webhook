@@ -5,6 +5,7 @@ on:
 
 jobs:
   push-to-registry:
+    name: Build Docker and push to registry
     strategy:
       matrix:
         include:
