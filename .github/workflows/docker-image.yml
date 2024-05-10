@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         include:
-          # - registry: 'docker.io'
+          - registry: 'docker.io'
           - registry: 'ghcr.io'
     runs-on: ubuntu-latest
     permissions:
@@ -42,10 +42,10 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Generate artifact attestation
-        uses: actions/attest-build-provenance@v1
-        id: attest
-        with:
-          subject-name: index.docker.io/tuanngocptn/sentry-telegram-webhook
-          subject-digest: ${{ steps.push.outputs.digest }}
-          push-to-registry: true
+      # - name: Generate artifact attestation
+      #   uses: actions/attest-build-provenance@v1
+      #   id: attest
+      #   with:
+      #     subject-name: index.docker.io/tuanngocptn/sentry-telegram-webhook
+      #     subject-digest: ${{ steps.push.outputs.digest }}
+      #     push-to-registry: true
