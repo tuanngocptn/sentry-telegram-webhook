@@ -23,7 +23,7 @@ jobs:
         with:
           registry: ${{ matrix.registry }}
           username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ matrix.registry == 'docker.io' && secrets.DOCKER_PASSWORD  || secrets.GITHUB_TOKEN }}
+          password: ${{ matrix.registry == 'docker.io' && secrets.DOCKER_PASSWORD  || secrets.CR_PAT }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
