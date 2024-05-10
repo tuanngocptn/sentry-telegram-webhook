@@ -85,7 +85,7 @@ $ npm install
 
 - create the compose file with below information. More details [HERE](https://hub.docker.com/repository/docker/tuanngocptn/sentry-telegram-webhook).
 
-  **Note: ** _If you would like to use Gihub Container Registry (ghcr) instead of Docker hub. Please following [THIS](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) before run below docker compose_
+  **Note:** _If you would like to use Gihub Container Registry (ghcr) instead of Docker hub. Please following [THIS](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) before run below docker compose_
 
   ```yml
   services:
