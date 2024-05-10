@@ -29,27 +29,33 @@ export class AppController {
 
   @Post('/sentry/webhooks')
   @HttpCode(HttpStatus.OK)
-  async webhooks(@Body() reqBody: SentryRequestType) {
-    this.logger.info('reqBody', reqBody);
-    const { issue } = reqBody.data;
-    const environment = await this.appService.checkSentryDetailTagIssue(
-      'environment',
-      issue.id,
-    );
-    const operationSystem = await this.appService.checkSentryDetailTagIssue(
-      'os',
-      issue.id,
-    );
-    const hookMessageData: HookMessageDataType = {
-      issueAction: reqBody.action,
-      appName: issue.project.name,
-      title: issue.title,
-      errorPosition: issue.culprit,
-      environment,
-      operationSystem,
-      detailLink: `https://${process.env.SENTRY_ORGANIZATION_SLUG}.sentry.io/issues/${issue.id}`,
+  webhooks(@Body() reqBody: SentryRequestType) {
+    const running = async () => {
+      try {
+        const { issue } = reqBody.data;
+        const environment = await this.appService.checkSentryDetailTagIssue(
+          'environment',
+          issue.id,
+        );
+        const operationSystem = await this.appService.checkSentryDetailTagIssue(
+          'os',
+          issue.id,
+        );
+        const hookMessageData: HookMessageDataType = {
+          issueAction: reqBody.action,
+          appName: issue.project.name,
+          title: issue.title,
+          errorPosition: issue.culprit,
+          environment,
+          operationSystem,
+          detailLink: `https://${process.env.SENTRY_ORGANIZATION_SLUG}.sentry.io/issues/${issue.id}`,
+        };
+        this.appService.sentTelegramMessage(hookMessageData);
+      } catch (ex) {
+        this.logger.error('Error: ', ex);
+      }
     };
-    this.appService.sentTelegramMessage(hookMessageData);
+    running();
     return reqBody.installation;
   }
 }
