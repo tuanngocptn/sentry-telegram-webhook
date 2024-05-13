@@ -1,5 +1,15 @@
 # Sentry Telegram Webhook
 
+### Table of Contents
+
+1. [Requirements](#Requirements)
+1. [Installation](#Installation)
+1. [Environment variables](#Environment-variables)
+1. [Custom Integrations Configuration](#Custom-Integrations-Configuration)
+1. [Running the app (normal)](#Running-the-app-normal)
+1. [Running the app with docker (Recommended)](#Running-the-app-with-docker-Recommended)
+1. [License](#License)
+
 **Description:** Webhook for Sentry which allows sending notification via Telegram messenger.
 
 - Github Repository: [HERE](https://github.com/tuanngocptn/sentry-telegram-webhook).
