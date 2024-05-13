@@ -83,7 +83,22 @@ $ npm install
 
 1. Run direct from docker hub: (don't need clone the repository)
 
-- create the compose file with below information. More details [HERE](https://hub.docker.com/repository/docker/tuanngocptn/sentry-telegram-webhook).
+- Docker run - run direct with this command:
+
+    ```shell
+    docker run \
+      -v /tmp/sentry-telegram-hook/logs:/code/logs \
+      -p 3000:3000 \
+      -e LANGUAGE=en \
+      -e TELEGRAM_BOT_TOKEN=<TELEGRAM_BOT_TOKEN> \ #get from bot father 
+      -e TELEGRAM_GROUP_ID=<TELEGRAM_GROUP_ID> \ #your telegram group id or telegram channel id 
+      -e TELEGRAM_TOPIC_ID=<TELEGRAM_TOPIC_ID> \ #not require - your telegram topic when enable Topics in group setting 
+      -e SENTRY_INTEGRATION_TOKEN=<SENTRY_INTEGRATION_TOKEN> \ #token in Custom Integrations in Sentry Setting 
+      -e SENTRY_ORGANIZATION_SLUG=<SENTRY_ORGANIZATION_SLUG> \ #your Sentry org slug
+      tuanngocptn/sentry-telegram-webhook:latest 
+    ```
+
+- Docker compose - create the compose file with below information. More details [HERE](https://hub.docker.com/repository/docker/tuanngocptn/sentry-telegram-webhook).
 
   **Note:** _If you would like to use Gihub Container Registry (ghcr) instead of Docker hub. Please following [THIS](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) before run below docker compose_
 
