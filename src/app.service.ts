@@ -32,16 +32,35 @@ export class AppService {
     );
   }
   async getIssueDetail(issueId): Promise<HookMessageDataType> {
-    const res = await axios({
+    const { data } = await axios({
       method: 'get',
       url: `https://sentry.io/api/0/organizations/${process.env.SENTRY_ORGANIZATION_SLUG}/issues/${issueId}/tags/`,
       headers: {
         Authorization: `Bearer ${process.env.SENTRY_INTEGRATION_TOKEN}`,
       },
     });
-    return res?.data?.reduce(
-      (cur, nex) => ({ ...cur, [nex.key]: nex?.topValues?.[0]?.value }),
-      {},
-    );
+
+    const device = data
+      ?.find((item) => item?.key === 'device')
+      ?.topValues?.map((item) => item?.value);
+
+    const os = data
+      ?.find?.((item) => item?.key === 'os')
+      ?.topValues?.map?.((item) => item?.value);
+
+    const deviceOs = device
+      ?.map?.((item, index) => `${item} (${os?.[index]})`)
+      ?.join?.(', ');
+
+    return data?.reduce(
+      (cur, nex) => ({
+        ...cur,
+        [nex.key]: nex?.topValues
+          ?.map?.((item) => item?.value)
+          ?.filter((item) => !!item)
+          ?.join(', '),
+      }),
+      { deviceOs },
+    ) as HookMessageDataType;
   }
 }
