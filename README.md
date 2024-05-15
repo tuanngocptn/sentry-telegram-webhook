@@ -47,7 +47,7 @@ $ npm install
 
 - After you create the new integration then you need config some parts like below image
 
-**Note:** _`<your-server-here.domain>` is your webhooks server. If you are running locally. You can use [Ngrok](https://ngrok.com/) for generate this._
+**Note:** _`<your-server-here.domain>` is your webhooks server (Full `Webhook Urls` is `https://<your-server-here.domain>/sentry/webhooks`). If you are running locally. You can use [Ngrok](https://ngrok.com/) for generate this._
 
 ![sentry internal integration config detail](https://github.com/tuanngocptn/sentry-telegram-webhook/blob/main/.github/assets/imgs/sentry_internal_integration_config_detail.png?raw=true 'sentry internal integration config detail')
 
