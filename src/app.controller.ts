@@ -32,27 +32,20 @@ export class AppController {
   webhooks(@Body() reqBody: SentryRequestType) {
     const running = async () => {
       try {
+        this.logger.info(reqBody.data);
         const { issue } = reqBody.data;
-        const environment = await this.appService.checkSentryDetailTagIssue(
-          'environment',
-          issue.id,
-        );
-        const operationSystem = await this.appService.checkSentryDetailTagIssue(
-          'os',
-          issue.id,
-        );
+        const issueDetails = await this.appService.getIssueDetail(issue.id);
         const hookMessageData: HookMessageDataType = {
           issueAction: reqBody.action,
           appName: issue.project.name,
           title: issue.title,
           errorPosition: issue.culprit,
-          environment,
-          operationSystem,
           detailLink: `https://${process.env.SENTRY_ORGANIZATION_SLUG}.sentry.io/issues/${issue.id}`,
+          ...issueDetails,
         };
         this.appService.sentTelegramMessage(hookMessageData);
       } catch (ex) {
-        this.logger.error('Error: ', ex);
+        this.logger.error(ex);
       }
     };
     running();

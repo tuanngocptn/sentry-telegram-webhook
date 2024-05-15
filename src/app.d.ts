@@ -85,6 +85,13 @@ export type HookMessageDataType = {
   title?: string;
   errorPosition?: string;
   environment?: string;
-  operationSystem?: string;
+  handled?: string;
+  release?: string;
+  dist?: string;
+  user?: string;
+  level?: string;
+  mechanism?: string;
+  device?: string;
+  os?: string;
   detailLink?: string;
 };

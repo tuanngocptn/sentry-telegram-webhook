@@ -14,6 +14,7 @@ export class AppService {
   getHello(): HelloWorldResponseType {
     return { message: 'Hello World!' };
   }
+
   async sentTelegramMessage(data: HookMessageDataType) {
     const message = this.appHelper.generateHookMessage(data);
     const sendMessageOptions: TelegramBot.SendMessageOptions = {
@@ -30,14 +31,17 @@ export class AppService {
       sendMessageOptions,
     );
   }
-  async checkSentryDetailTagIssue(tag, issueId) {
+  async getIssueDetail(issueId): Promise<HookMessageDataType> {
     const res = await axios({
       method: 'get',
-      url: `https://sentry.io/api/0/issues/${issueId}/tags/${tag}/`,
+      url: `https://sentry.io/api/0/organizations/${process.env.SENTRY_ORGANIZATION_SLUG}/issues/${issueId}/tags/`,
       headers: {
         Authorization: `Bearer ${process.env.SENTRY_INTEGRATION_TOKEN}`,
       },
     });
-    return res?.data?.topValues?.[0].value;
+    return res?.data?.reduce(
+      (cur, nex) => ({ ...cur, [nex.key]: nex?.topValues?.[0]?.value }),
+      {},
+    );
   }
 }
