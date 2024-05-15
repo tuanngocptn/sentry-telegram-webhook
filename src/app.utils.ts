@@ -10,7 +10,8 @@ export function generateHookMessageEn(data: HookMessageDataType) {
 \\- *Position:* ${_data.errorPosition || 'none'}
 \\- *Environment:* ${_data.environment || 'none'}
 \\- *Version:* ${_data.release || 'none'}
-\\- *Devices:* ${_data.deviceOs || 'none'}
+\\- *Devices:* ${_data.device || 'none'}
+\\- *Operation System:* ${_data.os || 'none'}
 
 *Detail:* [HERE](${_data.detailLink})
   `;
@@ -26,7 +27,8 @@ export function generateHookMessageVi(data: HookMessageDataType) {
 \\- *Lỗi ở:* ${_data.errorPosition || 'none'}
 \\- *Môi trường:* ${_data.environment || 'none'}
 \\- *Phiên bản:* ${_data.release || 'none'}
-\\- *Thiết bị:* ${_data.deviceOs || 'none'}
+\\- *Thiết bị:* ${_data.device || 'none'}
+\\- *Hệ điều hành:* ${_data.os || 'none'}
 
 *Xem chi tiết:* [TẠI ĐÂY](${_data.detailLink}) 
   `;

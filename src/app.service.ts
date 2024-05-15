@@ -39,19 +39,6 @@ export class AppService {
         Authorization: `Bearer ${process.env.SENTRY_INTEGRATION_TOKEN}`,
       },
     });
-
-    const device = data
-      ?.find((item) => item?.key === 'device')
-      ?.topValues?.map((item) => item?.value);
-
-    const os = data
-      ?.find?.((item) => item?.key === 'os')
-      ?.topValues?.map?.((item) => item?.value);
-
-    const deviceOs = device
-      ?.map?.((item, index) => `${item} (${os?.[index]})`)
-      ?.join?.(', ');
-
     return data?.reduce(
       (cur, nex) => ({
         ...cur,
@@ -60,7 +47,7 @@ export class AppService {
           ?.filter((item) => !!item)
           ?.join(', '),
       }),
-      { deviceOs },
+      {},
     ) as HookMessageDataType;
   }
 }
