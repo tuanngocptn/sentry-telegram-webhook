@@ -12,6 +12,7 @@ import { Logger } from 'winston';
 import { HookMessageDataType, SentryRequestType } from './app';
 import { AppInterceptor } from './app.interceptor';
 import { AppService } from './app.service';
+import { AppHelper } from './app.helper';
 
 @Controller()
 @UseInterceptors(AppInterceptor)
@@ -20,6 +21,7 @@ export class AppController {
     @Inject('winston')
     private readonly logger: Logger,
     private readonly appService: AppService,
+    private readonly appHelper: AppHelper,
   ) {}
 
   @Get()
@@ -31,9 +33,12 @@ export class AppController {
   @HttpCode(HttpStatus.OK)
   webhooks(@Body() reqBody: SentryRequestType) {
     const running = async () => {
+      this.logger.info(reqBody.data);
+      const { issue } = reqBody.data;
       try {
-        this.logger.info(reqBody.data);
-        const { issue } = reqBody.data;
+        if (!this.appHelper.isAllowNotification(issue.project.slug)) {
+          return;
+        }
         const issueDetails = await this.appService.getIssueDetail(issue.id);
         const hookMessageData: HookMessageDataType = {
           issueAction: reqBody.action,

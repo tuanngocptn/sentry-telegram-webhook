@@ -32,14 +32,15 @@ $ npm install
 
 ## Environment variables
 
-| Name                     | Is Require | Type   | Note                                                                                                                                                                                                                                          | Value |
-| ------------------------ | ---------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| LANGUAGE                 | Yes        | string | The language of message when send                                                                                                                                                                                                             | vi,en |
-| TELEGRAM_BOT_TOKEN       | Yes        | string | The token from @BotFather telegram check [HERE](https://core.telegram.org/bots/tutorial#obtain-your-bot-token) for see how to get this.                                                                                                       |       |
-| TELEGRAM_GROUP_ID        | Yes        | number | The id of your telegram group. You can use telegram API for check that through Postman. Check [HERE](https://stackoverflow.com/questions/32423837/telegram-bot-how-to-get-a-group-chat-id) for more detail. Normally, that start with -100... |       |
-| TELEGRAM_TOPIC_ID        | No         | number | The id of you topic if you enable Topics in group setting.                                                                                                                                                                                    |       |
-| SENTRY_INTEGRATION_TOKEN | Yes        | string | The token that geneate by sentry. Check [HERE](https://docs.sentry.io/organization/integrations/integration-platform/#permissions) for more detail.                                                                                           |       |
-| SENTRY_ORGANIZATION_SLUG | Yes        | string | The organization slug in your sentry organization setting                                                                                                                                                                                     |       |
+| Name                           | Is Require | Type   | Note                                                                                                                                                                                                                                          | Value |
+| ------------------------------ | ---------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| LANGUAGE                       | Yes        | string | The language of message when send                                                                                                                                                                                                             | vi,en |
+| TELEGRAM_BOT_TOKEN             | Yes        | string | The token from @BotFather telegram check [HERE](https://core.telegram.org/bots/tutorial#obtain-your-bot-token) for see how to get this.                                                                                                       |       |
+| TELEGRAM_GROUP_ID              | Yes        | number | The id of your telegram group. You can use telegram API for check that through Postman. Check [HERE](https://stackoverflow.com/questions/32423837/telegram-bot-how-to-get-a-group-chat-id) for more detail. Normally, that start with -100... |       |
+| TELEGRAM_TOPIC_ID              | No         | number | The id of you topic if you enable Topics in group setting.                                                                                                                                                                                    |       |
+| SENTRY_INTEGRATION_TOKEN       | Yes        | string | The token that geneate by sentry. Check [HERE](https://docs.sentry.io/organization/integrations/integration-platform/#permissions) for more detail.                                                                                           |       |
+| SENTRY_ORGANIZATION_SLUG       | Yes        | string | The organization slug in your sentry organization setting                                                                                                                                                                                     |       |
+| SENTRY_PROJECT_SLUG_ALLOW_LIST | No         | string | your Project slug list (Not require - split with comma `,` character)setting                                                                                                                                                                  |       |
 
 ## Custom Integrations Configuration
 
@@ -72,6 +73,7 @@ $ npm install
    TELEGRAM_TOPIC_ID=<not require - your telegram topic (when enable Topics in group setting)>
    SENTRY_INTEGRATION_TOKEN=<token in Custom Integrations in Sentry Setting>
    SENTRY_ORGANIZATION_SLUG=<your Sentry org slug>
+   SENTRY_PROJECT_SLUG_ALLOW_LIST=<your Project slug list (Not require - split with comma `,` charactor)>
    ```
 
 3. Run with npm
@@ -105,6 +107,7 @@ $ npm install
       -e TELEGRAM_TOPIC_ID=<TELEGRAM_TOPIC_ID> \ #not require - your telegram topic when enable Topics in group setting 
       -e SENTRY_INTEGRATION_TOKEN=<SENTRY_INTEGRATION_TOKEN> \ #token in Custom Integrations in Sentry Setting 
       -e SENTRY_ORGANIZATION_SLUG=<SENTRY_ORGANIZATION_SLUG> \ #your Sentry org slug
+      -e SENTRY_PROJECT_SLUG_ALLOW_LIST=<SENTRY_PROJECT_SLUG_ALLOW_LIST> \ your Project slug list (Not require - split with comma `,` character)
       tuanngocptn/sentry-telegram-webhook:latest 
     ```
 
@@ -126,6 +129,7 @@ $ npm install
         - TELEGRAM_TOPIC_ID=<not require - your telegram topic (when enable Topics in group setting)>
         - SENTRY_INTEGRATION_TOKEN=<token in Custom Integrations in Sentry Setting>
         - SENTRY_ORGANIZATION_SLUG=<your Sentry org slug>
+        - SENTRY_PROJECT_SLUG_ALLOW_LIST=<your Project slug list (Not require - split with comma `,` character)>
       ports:
         - 3000:3000
       volumes:
@@ -150,6 +154,7 @@ $ npm install
     - TELEGRAM_TOPIC_ID=<not require - your telegram topic (when enable Topics in group setting)>
     - SENTRY_INTEGRATION_TOKEN=<token in Custom Integrations in Sentry Setting>
     - SENTRY_ORGANIZATION_SLUG=<your Sentry org slug>
+    - SENTRY_PROJECT_SLUG_ALLOW_LIST=<your Project slug list (Not require - split with comma `,` character)>
   ```
 
 - Run with docker:
@@ -176,6 +181,7 @@ $ npm install
     - TELEGRAM_TOPIC_ID=<not require - your telegram topic (when enable Topics in group setting)>
     - SENTRY_INTEGRATION_TOKEN=<token in Custom Integrations in Sentry Setting>
     - SENTRY_ORGANIZATION_SLUG=<your Sentry org slug>
+    - SENTRY_PROJECT_SLUG_ALLOW_LIST=<your Project slug list (Not require - split with comma `,` character)>
   ```
 
 - Run with docker:
