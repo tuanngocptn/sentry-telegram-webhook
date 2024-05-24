@@ -33,9 +33,9 @@ export class AppController {
   @HttpCode(HttpStatus.OK)
   webhooks(@Body() reqBody: SentryRequestType) {
     const running = async () => {
-      this.logger.info(reqBody.data);
-      const { issue } = reqBody.data;
       try {
+        this.logger.info(reqBody);
+        const { issue } = reqBody.data;
         if (!this.appHelper.isAllowNotification(issue.project.slug)) {
           return;
         }
@@ -54,6 +54,6 @@ export class AppController {
       }
     };
     running();
-    return reqBody.installation;
+    return reqBody.installation || { message: 'success' };
   }
 }
