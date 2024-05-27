@@ -37,6 +37,9 @@ export class AppController {
         this.logger.info(reqBody);
         const { issue } = reqBody.data;
         if (!this.appHelper.isAllowNotification(issue.project.slug)) {
+          this.logger.info(
+            'This app slug "${issue.project.slug}" is not allowed for push notifications !!!',
+          );
           return;
         }
         const issueDetails = await this.appService.getIssueDetail(issue.id);
