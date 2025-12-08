@@ -35,7 +35,6 @@ export class AppService {
     const { data } = await axios({
       method: 'get',
       url: `${process.env.SENTRY_URL || 'https://sentry.io'}/api/0/organizations/${process.env.SENTRY_ORGANIZATION_SLUG}/issues/${issueId}/tags/`,
-      // url: `https://sentry.io/api/0/organizations/${process.env.SENTRY_ORGANIZATION_SLUG}/issues/${issueId}/tags/`,
       headers: {
         Authorization: `Bearer ${process.env.SENTRY_INTEGRATION_TOKEN}`,
       },

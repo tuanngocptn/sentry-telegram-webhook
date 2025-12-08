@@ -73,12 +73,12 @@ export class AppController {
           issueId = event.issue_id;
           webUrl = event.web_url || '';
 
-          // project может быть объектом или числом
+          // project can be an object or a number
           if (typeof event.project === 'object' && event.project) {
             projectName = event.project.name || 'Unknown';
             projectSlug = event.project.slug || '';
           } else {
-            // Извлекаем имя проекта из URL
+            // Extract the project name from the URL
             if (event.url) {
               const match = event.url.match(/\/projects\/([^/]+)\/([^/]+)\//);
               if (match) {
@@ -88,12 +88,12 @@ export class AppController {
             }
           }
 
-          // Извлекаем данные из contexts (аналогично data.error)
+          // Extract data from contexts (similar to data.error)
           const contexts = event.contexts || {};
           const exception = event.exception?.values?.[0];
           const frame = exception?.stacktrace?.frames?.slice(-1)[0];
 
-          // Позиция с полным путём и номером строки
+          // Position with full path and line number
           if (frame) {
             const filename = frame.abs_path || frame.filename || 'unknown';
             const lineno = frame.lineno || '?';
@@ -101,7 +101,7 @@ export class AppController {
             culprit = `${filename}:${lineno}${func}`;
           }
 
-          // Формируем issueDetails из данных event
+          // Form issueDetails from event data
           issueDetails = {
             environment: event.environment || '',
             release: event.release || '',
@@ -118,14 +118,14 @@ export class AppController {
           };
 
         } else if (data.error) {
-          // error.created - самый подробный тип
+          // error.created - the most detailed type
           const error = data.error as any;
           title = error.title;
           culprit = error.culprit;
           issueId = error.issue_id;
           webUrl = error.web_url || '';
 
-          // Извлекаем имя проекта из issue_url или url
+          // Extract the project name from issue_url or url
           if (error.url) {
             const match = error.url.match(/\/projects\/([^/]+)\/([^/]+)\//);
             if (match) {
@@ -135,12 +135,12 @@ export class AppController {
           }
           
 
-          // Извлекаем данные из contexts
+          // Extracting data from contexts
           const contexts = error.contexts || {};
           const exception = error.exception?.values?.[0];
-          const frame = exception?.stacktrace?.frames?.slice(-1)[0]; // последний фрейм - место ошибки
+          const frame = exception?.stacktrace?.frames?.slice(-1)[0]; // last frame - location of error
 
-          // Позиция с полным путём и номером строки
+          // Position with full path and line number
           if (frame) {
             const filename = frame.abs_path || frame.filename || 'unknown';
             const lineno = frame.lineno || '?';
@@ -148,7 +148,7 @@ export class AppController {
             culprit = `${filename}:${lineno}${func}`;
           }
 
-          // Формируем issueDetails из данных error
+          // Form issueDetails from error data
           issueDetails = {
             environment: error.environment || 'unknown',
             release: error.release || 'none',
@@ -197,7 +197,7 @@ export class AppController {
   }
 
   private formatOs(contexts: any): string {
-    // Приоритет: серверная ОС, потом клиентская
+    // Priority: server OS, then client OS
     const serverOs = contexts.os;
     const clientOs = contexts.client_os;
     
