@@ -70,10 +70,52 @@ export class AppController {
           const event = data.event as any;
           title = event.title;
           culprit = event.culprit;
-          projectName = event.project?.name || 'Unknown';
-          projectSlug = event.project?.slug || '';
           issueId = event.issue_id;
           webUrl = event.web_url || '';
+
+          // project может быть объектом или числом
+          if (typeof event.project === 'object' && event.project) {
+            projectName = event.project.name || 'Unknown';
+            projectSlug = event.project.slug || '';
+          } else {
+            // Извлекаем имя проекта из URL
+            if (event.url) {
+              const match = event.url.match(/\/projects\/([^/]+)\/([^/]+)\//);
+              if (match) {
+                projectName = match[2];
+                projectSlug = match[2];
+              }
+            }
+          }
+
+          // Извлекаем данные из contexts (аналогично data.error)
+          const contexts = event.contexts || {};
+          const exception = event.exception?.values?.[0];
+          const frame = exception?.stacktrace?.frames?.slice(-1)[0];
+
+          // Позиция с полным путём и номером строки
+          if (frame) {
+            const filename = frame.abs_path || frame.filename || 'unknown';
+            const lineno = frame.lineno || '?';
+            const func = frame.function && frame.function !== '?' ? ` in ${frame.function}` : '';
+            culprit = `${filename}:${lineno}${func}`;
+          }
+
+          // Формируем issueDetails из данных event
+          issueDetails = {
+            environment: event.environment || '',
+            release: event.release || '',
+            dist: event.dist || '',
+            level: event.level || 'error',
+            handled: exception?.mechanism?.handled !== false ? 'yes' : 'no',
+            mechanism: exception?.mechanism?.type || '',
+            device: contexts.device?.family || contexts.device?.model || '',
+            os: this.formatOs(contexts),
+            user: this.formatUser(event.user),
+            browser: contexts.browser?.browser || '',
+            runtime: contexts.runtime?.runtime || '',
+            url: event.request?.url || '',
+          };
 
         } else if (data.error) {
           // error.created - самый подробный тип
